@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tallinn 9–12 kwietnia 2026 · Interaktywny Plan</title>
+<style>
+  :root {
+    --baltic: #1a3a5c;
+    --baltic-light: #2d5282;
+    --cream: #faf6f0;
+    --cream-dark: #f0e9dc;
+    --medieval: #a8322d;
+    --medieval-dark: #7a2420;
+    --stone: #6b7280;
+    --stone-light: #9ca3af;
+    --gold: #c89452;
+    --gold-light: #e4c48a;
+    --ink: #1f2937;
+    --shadow: 0 4px 20px rgba(26, 58, 92, 0.12);
+    --shadow-lg: 0 12px 40px rgba(26, 58, 92, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .hero {
+    background: linear-gradient(135deg, var(--baltic) 0%, var(--baltic-light) 60%, #3a6ba5 100%);
+    color: white;
+    padding: 3rem 1.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(200,148,82,0.12) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-content { max-width: 1100px; margin: 0 auto; position: relative; }
+  .hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+  .hero h1 .em { color: var(--gold-light); }
+  .hero p { font-size: 1.15rem; opacity: 0.92; max-width: 680px; }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem;
+    margin-top: 1.75rem;
+    font-size: 0.95rem;
+  }
+  .hero-meta div { display: flex; align-items: center; gap: 0.5rem; opacity: 0.9; }
+  .hero-meta strong { color: var(--gold-light); }
+  .hero-img {
+    position: absolute;
+    right: -60px;
+    bottom: -40px;
+    width: 40%;
+    max-width: 480px;
+    opacity: 0.18;
+    filter: blur(1px);
+    border-radius: 20px;
+    transition: opacity 0.6s;
+  }
+  .hero-img.loaded { opacity: 0.35; }
+
+  .tabs {
+    position: sticky;
+    top: 0;
+    background: var(--cream);
+    border-bottom: 2px solid var(--cream-dark);
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .tabs-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 0.5rem;
+  }
+  .tabs-inner::-webkit-scrollbar { display: none; }
+  .tab {
+    background: none;
+    border: none;
+    padding: 1.1rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--stone);
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .tab:hover { color: var(--baltic); }
+  .tab.active {
+    color: var(--baltic);
+    border-bottom-color: var(--medieval);
+  }
+  .tab .emoji { margin-right: 0.4rem; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  .panel { display: none; animation: fadeIn 0.4s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h2 { font-size: 1.9rem; color: var(--baltic); margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+  h3 { font-size: 1.25rem; color: var(--baltic); margin: 1.5rem 0 0.5rem; }
+  .panel-intro {
+    color: var(--stone);
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .timeline { position: relative; padding-left: 2.5rem; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 0.85rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold) 0%, var(--medieval) 50%, var(--baltic) 100%);
+  }
+  .t-item { position: relative; margin-bottom: 1.25rem; }
+  .t-item::before {
+    content: "";
+    position: absolute;
+    left: -2.1rem;
+    top: 0.8rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    background: var(--cream);
+    border: 3px solid var(--medieval);
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .t-time {
+    display: inline-block;
+    font-weight: 700;
+    color: var(--medieval);
+    font-size: 0.85rem;
+    background: rgba(168, 50, 45, 0.08);
+    padding: 0.15rem 0.55rem;
+    border-radius: 4px;
+    margin-bottom: 0.35rem;
+  }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 0.9rem;
+    overflow: hidden;
+    border: 1px solid var(--cream-dark);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-lg); }
+  .card-head {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    user-select: none;
+  }
+  .card-head:hover { background: var(--cream); }
+  .card-title { font-size: 1.1rem; font-weight: 700; color: var(--baltic); margin-bottom: 0.2rem; }
+  .card-subtitle { font-size: 0.85rem; color: var(--stone); font-style: italic; }
+  .card-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+  .tag {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.55rem;
+    background: var(--cream-dark);
+    color: var(--stone);
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .tag.price { background: rgba(200, 148, 82, 0.18); color: #8a6528; }
+  .tag.time { background: rgba(26, 58, 92, 0.1); color: var(--baltic); }
+  .tag.free { background: rgba(34, 139, 34, 0.15); color: #1a6b1a; }
+  .chevron {
+    color: var(--stone-light);
+    font-size: 1.3rem;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .card.open .chevron { transform: rotate(180deg); }
+  .card-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+  .card.open .card-body { max-height: 3000px; }
+  .card-body-inner {
+    padding: 0 1.25rem 1.25rem;
+    border-top: 1px solid var(--cream-dark);
+    padding-top: 1rem;
+  }
+  .card-body p { margin-bottom: 0.75rem; }
+  .card-body p:last-child { margin-bottom: 0; }
+
+  /* WIKI IMAGES */
+  .wiki-img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--baltic) 0%, var(--baltic-light) 50%, var(--gold) 120%);
+    display: block;
+    transition: opacity 0.4s;
+    opacity: 0;
+  }
+  .wiki-img.loaded { opacity: 1; }
+  .wiki-img.error {
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.85);
+    font-size: 3rem;
+  }
+  .img-wrap {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--baltic) 0%, var(--baltic-light) 50%, var(--gold) 120%);
+  }
+  .img-wrap::before {
+    content: attr(data-emoji);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    color: rgba(255,255,255,0.7);
+    z-index: 0;
+  }
+  .img-wrap img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .img-wrap img.loaded { opacity: 1; }
+  .img-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 1rem 0.85rem 0.65rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: white;
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .img-wrap img.loaded + .img-caption { opacity: 1; }
+
+  .fact {
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.93rem;
+  }
+  .fact strong { color: var(--medieval); }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+  }
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    background: var(--baltic);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .link-btn:hover { background: var(--baltic-light); }
+  .link-btn.alt { background: var(--medieval); }
+  .link-btn.alt:hover { background: var(--medieval-dark); }
+  .link-btn.ghost { background: transparent; color: var(--baltic); border: 1.5px solid var(--baltic); }
+  .link-btn.ghost:hover { background: var(--baltic); color: white; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  .info-box {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--cream-dark);
+    box-shadow: var(--shadow);
+  }
+  .info-box h4 {
+    color: var(--medieval);
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .info-box p { font-size: 0.92rem; }
+  .info-box ul { font-size: 0.92rem; margin-left: 1.1rem; }
+  .info-box li { margin-bottom: 0.3rem; }
+
+  .resto {
+    background: white;
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 0.85rem;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--gold);
+  }
+  .resto.fine { border-left-color: var(--medieval); background: linear-gradient(to right, rgba(168,50,45,0.04), white 40%); }
+  .resto h4 {
+    font-size: 1.1rem;
+    color: var(--baltic);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .resto .price-tag {
+    font-size: 0.75rem;
+    background: var(--gold);
+    color: white;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+  .resto p { font-size: 0.9rem; color: var(--stone); margin-top: 0.3rem; }
+  .resto .addr { font-size: 0.8rem; color: var(--stone-light); margin-top: 0.35rem; }
+
+  .dishes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.85rem; margin: 1rem 0; }
+  .dish {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--cream-dark);
+    text-align: center;
+  }
+  .dish .icon { font-size: 2rem; display: block; margin-bottom: 0.4rem; }
+  .dish strong { color: var(--baltic); display: block; font-size: 0.95rem; margin-bottom: 0.2rem; }
+  .dish span { font-size: 0.82rem; color: var(--stone); }
+
+  .phrases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.6rem; }
+  .phrase {
+    background: white;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    border-left: 3px solid var(--medieval);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+  .phrase .et { font-weight: 700; color: var(--baltic); font-size: 1.05rem; }
+  .phrase .pl { color: var(--stone); font-size: 0.85rem; }
+
+  .history-timeline {
+    position: relative;
+    padding-left: 2rem;
+    border-left: 3px solid var(--gold);
+    margin-left: 1rem;
+  }
+  .history-event { margin-bottom: 1.1rem; position: relative; }
+  .history-event::before {
+    content: "";
+    position: absolute;
+    left: -2.35rem;
+    top: 0.4rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--medieval);
+    border-radius: 50%;
+    border: 2px solid var(--cream);
+  }
+  .history-event .year { font-weight: 800; color: var(--medieval); font-size: 0.95rem; }
+  .history-event .desc { font-size: 0.92rem; margin-top: 0.15rem; }
+
+  .banner {
+    background: linear-gradient(135deg, var(--medieval) 0%, var(--medieval-dark) 100%);
+    color: white;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .banner .icon { font-size: 2rem; line-height: 1; }
+  .banner h4 { margin-bottom: 0.25rem; font-size: 1.05rem; }
+  .banner p { font-size: 0.92rem; opacity: 0.95; }
+  .banner a { color: #ffd; }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+  .gallery .img-wrap { height: 160px; margin-bottom: 0; }
+
+  footer {
+    background: var(--baltic);
+    color: rgba(255,255,255,0.85);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    margin-top: 3rem;
+  }
+  footer p { font-size: 0.9rem; max-width: 680px; margin: 0 auto 0.5rem; }
+  footer a { color: var(--gold-light); }
+
+  @media (max-width: 640px) {
+    .hero { padding: 2rem 1rem 2.5rem; }
+    .hero-img { display: none; }
+    main { padding: 1.5rem 1rem 3rem; }
+    .timeline { padding-left: 2rem; }
+    .t-item::before { left: -1.75rem; }
+    h2 { font-size: 1.5rem; }
+    .img-wrap { height: 200px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="hero-img" data-wiki="Tallinn" alt="">
+  <div class="hero-content">
+    <span class="hero-badge">🇪🇪 9–12 kwietnia 2026 · 4 dni</span>
+    <h1>Tallinn<br><span class="em">średniowieczna perła Bałtyku</span></h1>
+    <p>Interaktywny plan zwiedzania stolicy Estonii — miasta, gdzie gotyckie wieże sąsiadują z cyfrową rewolucją, a jedno z najlepiej zachowanych Starych Miast w Europie wciąż żyje codziennym rytmem.</p>
+    <div class="hero-meta">
+      <div>🛬 <span>Przylot: <strong>czw 17:00</strong></span></div>
+      <div>🛫 <span>Wylot: <strong>nd 17:30</strong></span></div>
+      <div>🏨 <span><strong>Hestia Hotel Kentmanni 13</strong></span></div>
+      <div>💶 <span>Waluta: <strong>EUR</strong></span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab active" data-panel="transport"><span class="emoji">🚊</span>Transport</button>
+    <button class="tab" data-panel="day1"><span class="emoji">1️⃣</span>Czw 9.04</button>
+    <button class="tab" data-panel="day2"><span class="emoji">2️⃣</span>Pt 10.04</button>
+    <button class="tab" data-panel="day3"><span class="emoji">3️⃣</span>Sob 11.04</button>
+    <button class="tab" data-panel="day4"><span class="emoji">4️⃣</span>Nd 12.04</button>
+    <button class="tab" data-panel="food"><span class="emoji">🍽️</span>Kuchnia</button>
+    <button class="tab" data-panel="history"><span class="emoji">📜</span>Historia</button>
+    <button class="tab" data-panel="practical"><span class="emoji">💡</span>Praktyczne</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- TRANSPORT -->
+<section class="panel active" id="transport">
+  <h2>🚊 Transport z lotniska i powrót</h2>
+  <p class="panel-intro">Lotnisko Lennart Meri (TLL) leży zaledwie 4 km od centrum — to jedno z najbliżej położonych lotnisk w Europie. Do hotelu dotrzesz w 20–25 minut.</p>
+
+  <div class="card open">
+    <div class="card-head">
+      <div>
+        <div class="card-title">🚋 Tramwaj nr 4 — rekomendowany</div>
+        <div class="card-subtitle">Najtańsza i najwygodniejsza opcja</div>
+        <div class="card-meta">
+          <span class="tag price">€2,00 / osoba</span>
+          <span class="tag time">~20 min</span>
+          <span class="tag">co 10–15 min</span>
+        </div>
+      </div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+      <div class="img-wrap" data-emoji="🚋">
+        <img data-wiki="Trams in Tallinn" alt="Tramwaj w Tallinnie">
+        <div class="img-caption">Tramwaje CAF Urbos AXL · Tallinn</div>
+      </div>
+      <p>Przystanek <strong>Lennujaam</strong> znajduje się przy samym terminalu (wyjście, prosto, ok. 100 m). Tramwaj <strong>linii 4 w kierunku Tondi</strong>, wysiadasz na <strong>Hotell Olümpia</strong> lub <strong>Vabaduse väljak</strong> — stamtąd do hotelu Hestia Kentmanni 3–4 minut pieszo.</p>
+      <div class="fact"><strong>Bilet:</strong> kup QR przez aplikację <strong>Pilet.ee</strong> lub w automacie (€2). Alternatywa: karta <strong>Ühiskaart</strong> — 1 godzina €1,50. Jeśli masz <strong>Tallinn Card</strong>, transport w cenie.</div>
+      <div class="links">
+        <a class="link-btn" href="https://transport.tallinn.ee/" target="_blank">Rozkład tramwaju 4</a>
+        <a class="link-btn ghost" href="https://pilet.ee" target="_blank">Pilet.ee</a>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div>
+        <div class="card-title">🚕 Bolt — taxi z aplikacji</div>
+        <div class="card-subtitle">Estońska aplikacja, działa świetnie</div>
+        <div class="card-meta">
+          <span class="tag price">€7–12</span>
+          <span class="tag time">~15 min</span>
+        </div>
+      </div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="card-body"><div class="card-body-inner">
+      <p><strong>Bolt</strong> to estońska aplikacja (ich rodzime „Uber") — ceny uczciwe, kierowcy szybko przyjeżdżają. Dla dwóch osób może się opłacać bardziej niż tramwaj.</p>
+      <div class="fact"><strong>Wskazówka:</strong> zainstaluj Bolt jeszcze w Polsce. Używa się go też do jedzenia (Bolt Food) i hulajnóg. Unikaj taksówek przed lotniskiem — €20–30.</div>
+    </div></div>
+  </div>
+
+  <div class="banner">
+    <span class="icon">⏰</span>
+    <div>
+      <h4>Powrót w niedzielę — wylot 17:30</h4>
+      <p>Wyjdź z hotelu najpóźniej o <strong>14:30</strong>. Tramwaj 4 z Vabaduse väljak na lotnisko ~20 min, kontrola 15–20 min → bramka ok. 16:00 (bezpieczny bufor dla lotu Schengen).</p>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 1 -->
+<section class="panel" id="day1">
+  <h2>Czwartek 9 kwietnia · Przyjazd i pierwsze wrażenia</h2>
+  <p class="panel-intro">Krótki, ale magiczny wieczór — po dotarciu do hotelu wychodzisz na pierwszy spacer, gdy Stare Miasto jest już podświetlone.</p>
+
+  <div class="timeline">
+    <div class="t-item">
+      <span class="t-time">17:00–18:15 · Lotnisko → Hotel</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🛬 Lądowanie i transfer</div>
+            <div class="card-subtitle">Tramwaj 4 → check-in w Hestii</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="✈️">
+            <img data-wiki="Tallinn Airport" alt="Lotnisko Tallinn">
+            <div class="img-caption">Lennart Meri Tallinn Airport (TLL)</div>
+          </div>
+          <p>Po wyjściu z bagażowej (strefa Schengen, bez kontroli paszportowej) tramwaj 4 do Vabaduse väljak. Hotel 3 min pieszo. Zrzuć bagaże, weź cieplejszą kurtkę (kwiecień wieczorem 2–8°C, wiatr znad Bałtyku!) i wychodzisz.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">18:30–19:30 · Pierwszy spacer</span>
+      <div class="card open">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🏰 Raekoja plats (Plac Ratuszowy)</div>
+            <div class="card-subtitle">Serce Starego Miasta</div>
+            <div class="card-meta"><span class="tag free">Wstęp wolny</span><span class="tag time">~30 min</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🏰">
+            <img data-wiki="Tallinn Town Hall Square" alt="Raekoja plats">
+            <div class="img-caption">Raekoja plats — Plac Ratuszowy</div>
+          </div>
+          <p>Z hotelu idziesz Kentmanni → Harju → wchodzisz na Stare Miasto. Kilka minut później stajesz na placu, który od <strong>XIII wieku</strong> był sercem miasta. Wieczorne podświetlenie sprawia, że fasady kolorowych kamienic wyglądają jak scena z baśni.</p>
+          <div class="fact"><strong>Ciekawostka:</strong> Tallinn posiada <strong>jedyny w północnej Europie gotycki ratusz</strong>, zbudowany w 1404 r. Na wieży stoi „Vana Toomas" (Stary Tomasz) — kuta figurka strażnika, symbol miasta od 1530 r.</div>
+          <p>W 1441 r. właśnie tutaj, jak głosi lokalna legenda, ustawiono po raz pierwszy ozdobioną choinkę (o ten tytuł spierają się z Rygą).</p>
+        </div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">💊 Raeapteek — Apteka Ratuszowa</div>
+            <div class="card-subtitle">Czynna od 1422 roku (!)</div>
+            <div class="card-meta"><span class="tag free">Muzeum wolne</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="💊">
+            <img data-wiki="Raeapteek" alt="Raeapteek">
+            <div class="img-caption">Raeapteek — Apteka Ratuszowa (1422)</div>
+          </div>
+          <p>Jedna z <strong>najstarszych nieprzerwanie działających aptek w Europie</strong>. Wieczorem nie wejdziesz już do środka, ale możesz zajrzeć przez witrynę — wrócisz tu w piątek. W XVI w. sprzedawano tu m.in. sproszkowane rogi jednorożca, mumię i „wodę miłości".</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">20:00 · Kolacja</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🍽️ Lekka kolacja</div>
+            <div class="card-subtitle">Rataskaevu 16 · Von Krahli Aed · Leib</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p><strong>Rataskaevu 16</strong> — kultowe miejsce, €15–25 za danie, trzeba <strong>rezerwować</strong>! Spróbuj pieczonej łopatki jagnięcej.</p>
+          <p><strong>Von Krahli Aed</strong> — więcej opcji wege, klimatyczne wnętrze, €12–20.</p>
+          <p><strong>Leib Resto ja Aed</strong> — „ukryty ogród" przy murach, €18–28.</p>
+          <div class="fact">Jeśli jesteś zmęczony, <strong>Kompressor</strong> na Rataskaevu robi gigantyczne estońskie naleśniki za €7–9 — bez rezerwacji.</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 2 -->
+<section class="panel" id="day2">
+  <h2>Piątek 10 kwietnia · Średniowieczne Stare Miasto</h2>
+  <p class="panel-intro">Dzień pełen murów, wież, gotyckich kościołów i widoków z Toompea. Wieczorem — jedyne „wyjście na bogato" tego wyjazdu.</p>
+
+  <div class="timeline">
+
+    <div class="t-item">
+      <span class="t-time">09:00 · Śniadanie</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">☕ RØST Bakery lub Reval Café</div>
+            <div class="card-subtitle">Kawa i drożdżówki</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p><strong>RØST</strong> (Rotermann Quarter) — piekarnia rzemieślnicza, chleb na zakwasie, kardamonowe bułki. €7–10.<br><strong>Reval Café</strong> (Müürivahe) — lokalna sieciówka, szybka, na trasie.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">10:00–11:00 · Niguliste</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">⛪ Kościół św. Mikołaja (Niguliste kirik)</div>
+            <div class="card-subtitle">Muzeum Sztuki Sakralnej · „Taniec śmierci" Bernta Notke</div>
+            <div class="card-meta"><span class="tag price">~€15</span><span class="tag time">1h</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="⛪">
+            <img data-wiki="St. Nicholas' Church, Tallinn" alt="Niguliste">
+            <div class="img-caption">Niguliste kirik — gotycki kościół XIII w.</div>
+          </div>
+          <p>Gotycki kościół z XIII w., zniszczony podczas sowieckiego bombardowania Tallinna w <strong>marcu 1944</strong> i odbudowany jako oddział Estońskiego Muzeum Sztuki. Jeden z najważniejszych zabytków gotyku w regionie bałtyckim.</p>
+          <div class="fact"><strong>Arcydzieło:</strong> fragment <strong>„Tańca Śmierci"</strong> Bernta Notke (ok. 1500 r.) — jedyne zachowane średniowieczne przedstawienie tego motywu w Europie. Oryginał miał 30 m długości; zachowało się ok. 7,5 m.</div>
+          <p>W 2023 r. zrekonstruowano ołtarz główny Hermena Rode z Lubeki (1478–1481). Można też wjechać windą na wieżę.</p>
+          <div class="links">
+            <a class="link-btn" href="https://nigulistemuuseum.ekm.ee/en/" target="_blank">Strona muzeum</a>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">11:15–12:30 · Plac Ratuszowy</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🏛️ Raekoda — Ratusz Tallinna</div>
+            <div class="card-subtitle">Jedyny gotycki ratusz w północnej Europie (1404)</div>
+            <div class="card-meta"><span class="tag price">~€5 wieża · €6 wnętrza</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🏛️">
+            <img data-wiki="Tallinn Town Hall" alt="Raekoda">
+            <div class="img-caption">Tallinna Raekoda — Ratusz (1402–1404)</div>
+          </div>
+          <p>Ratusz stoi tu od XIII w., ale obecny budynek to lata 1402–1404. <strong>Najstarszy zachowany ratusz w krajach bałtyckich i Skandynawii</strong> — mieszanka gotyku i wczesnego renesansu.</p>
+          <div class="fact"><strong>Vana Toomas:</strong> chorągiewka z 1530 r. na szczycie wieży — jeden z najstarszych symboli miasta. Oryginał stoi teraz w Muzeum Miasta.</div>
+          <p>Obok — <strong>Raeapteek</strong>: malutkie muzeum w głębi działającej apteki. Zobaczysz słoje ze sproszkowanym rogiem jednorożca i „confectum mirabilis" (marcepan — podobno wymyślony tu jako lek na ból głowy!).</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">12:30–13:30 · Obiad średniowieczny</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🥣 III Draakon (Trzeci Smok)</div>
+            <div class="card-subtitle">Tania średniowieczna jadłodajnia w ratuszu</div>
+            <div class="card-meta"><span class="tag price">€2–5 za danie</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p>Niska, zakopcona piwnica Ratusza. Obsługa w strojach z epoki, świece, gliniane kubki. Menu:</p>
+          <ul style="margin-left: 1.2rem">
+            <li><strong>Łosiowa zupa</strong> — €2</li>
+            <li><strong>Paszteciki z mięsem</strong> — €2 za sztukę</li>
+            <li><strong>Marynowane ogórki</strong> — z beczki, ręką</li>
+            <li><strong>Grzane wino z miodem</strong> — €4</li>
+          </ul>
+          <div class="fact"><strong>Uwaga:</strong> nie ma widelców — jesz rękami. Świetna alternatywa dla przeinwestowanego <strong>Olde Hansa</strong> (kolacja €50+).</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">14:00–17:00 · Toompea</span>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">⛰️ Wzgórze Toompea — wejście</div>
+            <div class="card-subtitle">Długą Nogą (Pikk jalg) lub Krótką Nogą (Lühike jalg)</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="⛰️">
+            <img data-wiki="Toompea" alt="Toompea">
+            <div class="img-caption">Wzgórze Toompea — „górne miasto"</div>
+          </div>
+          <p>Tallinn składał się z dwóch oddzielnych miast: <strong>Dolnego</strong> (kupieckiego, hanzeatyckiego) i <strong>Górnego/Toompea</strong> (szlacheckiego). Łączyły je dwie ulice-bramy: Pikk jalg („Długa Noga", dla wozów) i Lühike jalg („Krótka Noga", schody). Każda miała własną bramę zamykaną na noc.</p>
+          <div class="fact">Dwa miasta były tak nieufne wobec siebie, że jeszcze w XVI w. urzędnicy z Dolnego Miasta nie mogli wchodzić uzbrojeni na Toompea — i odwrotnie.</div>
+        </div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">☦️ Sobór Aleksandra Newskiego</div>
+            <div class="card-subtitle">1900 · symbol rusyfikacji Estonii</div>
+            <div class="card-meta"><span class="tag free">Wstęp wolny</span><span class="tag time">15 min</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="☦️">
+            <img data-wiki="Alexander Nevsky Cathedral, Tallinn" alt="Sobór Aleksandra Newskiego">
+            <div class="img-caption">Aleksander Nevski katedraal (1900)</div>
+          </div>
+          <p>Bizantyjsko-moskiewska cerkiew z lat 1894–1900, zbudowana <strong>celowo</strong> naprzeciw zamku Toompea — jako architektoniczny symbol rosyjskiej dominacji. Po 1918 Estończycy chcieli ją zburzyć; przetrwała, bo zabrakło pieniędzy. Pięć złotych kopuł widać z całego Tallinna.</p>
+          <div class="fact"><strong>Wewnątrz:</strong> mozaiki i ikony ze szkoły petersburskiej. Panie — chusta na głowę, panowie — zdejmij czapkę. Zdjęć nie robimy.</div>
+        </div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">⛪ Toomkirik — Katedra Mariacka</div>
+            <div class="card-subtitle">Najstarszy kościół w Tallinnie (1219)</div>
+            <div class="card-meta"><span class="tag price">€2 · wieża €5</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="⛪">
+            <img data-wiki="St Mary's Cathedral, Tallinn" alt="Toomkirik">
+            <div class="img-caption">Toomkirik — katedra luterańska</div>
+          </div>
+          <p>Luterańska katedra na Wzgórzu Tumskim. Pierwszy kościół z 1219, obecny kształt po pożarze z 1684. Wnętrze pełne <strong>epitafiów i herbów rodów bałtycko-niemieckich</strong>. Pochowany jest tu <strong>Adam Johann von Krusenstern</strong>, pierwszy Rosjanin, który opłynął świat.</p>
+          <p>Na wieżę warto wejść — widok wąski, ale obejmuje dachy całej Toompea.</p>
+        </div></div>
+      </div>
+
+      <div class="card open">
+        <div class="card-head">
+          <div>
+            <div class="card-title">📸 Platforma Kohtuotsa</div>
+            <div class="card-subtitle">Najsłynniejszy widok Tallinna</div>
+            <div class="card-meta"><span class="tag free">Wolne</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🌆">
+            <img data-wiki="Old Town (Tallinn)" alt="Widok z Kohtuotsa">
+            <div class="img-caption">Widok ze wzgórza Toompea na Stare Miasto</div>
+          </div>
+          <p>Widok z pocztówki: <strong>terakotowe dachy Starego Miasta, wieża Oleviste, port i wieżowce Maakri w tle</strong>. Na murku napis „The Times We Had". W pobliżu druga platforma — <strong>Patkuli</strong> — widok na wieże murów i dworzec Balti Jaam.</p>
+          <div class="fact"><strong>Najlepsze światło:</strong> późne popołudnie — słońce rozświetla dachówki. W kwietniu zachód ok. 20:30.</div>
+        </div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🏰 Zamek Toompea i Parlament</div>
+            <div class="card-subtitle">Siedziba Riigikogu · baszta Pikk Hermann</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🏰">
+            <img data-wiki="Toompea Castle" alt="Zamek Toompea">
+            <div class="img-caption">Toompea loss — siedziba parlamentu</div>
+          </div>
+          <p>Twierdza duńska (XIII w.), potem krzyżacka i szwedzka. Dziś <strong>różowy barokowy budynek</strong> (Katarzyna II, 1773) to parlament — Riigikogu. Z tyłu najstarsza część: baszta <strong>Pikk Hermann</strong> („Długi Herman", 48 m, XIV w.). Na szczycie codziennie o świcie wciągana jest estońska flaga — symbol niepodległości od 1989, gdy zastąpiono tam flagę sowiecką.</p>
+        </div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🌷 Ogród Duńskiego Króla i Kiek in de Kök</div>
+            <div class="card-subtitle">Legenda Dannebrogu · XV-wieczna baszta armatnia</div>
+            <div class="card-meta"><span class="tag price">€14 muzeum+bastiony</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🗼">
+            <img data-wiki="Kiek in de Kök" alt="Kiek in de Kök">
+            <div class="img-caption">Kiek in de Kök — baszta armatnia (1475)</div>
+          </div>
+          <p>Schodząc z Toompea przechodzisz przez <strong>Taani Kuninga aed</strong>. Tu 15 czerwca 1219 r. — według legendy — z nieba spadła flaga duńska <em>Dannebrog</em>, najstarsza używana flaga państwowa świata. W ogrodzie stoją trzy <strong>mnisze posągi</strong> — ciemne, tajemnicze, bardzo instagramowalne.</p>
+          <p>Obok <strong>Kiek in de Kök</strong> (dolnoniem. „zaglądnij do kuchni" — bo ze szczytu obrońcy widzieli, co gotują mieszczanie). 38 m, 4 m grube mury, 1475 r. Dziś muzeum fortyfikacji z wejściem do <strong>podziemnych bastionów</strong> — tuneli XVII-wiecznych.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">17:30 · Powrót do hotelu, odpoczynek</span>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">19:30 · KOLACJA WIECZORU 🌟</span>
+      <div class="card open">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🍷 NOA Chef's Hall — jedno wyjście na bogato</div>
+            <div class="card-subtitle">★ Michelin · nowa estońska kuchnia · widok na zatokę</div>
+            <div class="card-meta"><span class="tag price">menu deg. ~€120–140</span><span class="tag">REZERWUJ!</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p><strong>NOA Chef's Hall</strong> (szef: Tõnis Siigur) — jedna z najlepiej ocenianych restauracji Estonii, <strong>gwiazdka Michelin</strong>. Viimsi, 15 min taksówką z centrum, widok na zatokę i panoramę Tallinna o zmroku.</p>
+          <p><strong>Menu degustacyjne</strong>: 7 dań z lokalnych produktów (jeleń z Saaremaa, ryby z Bałtyku, fermentowane warzywa, rokitnik, jałowiec). Z parowaniem win €180–200.</p>
+          <div class="banner">
+            <span class="icon">⚠️</span>
+            <div>
+              <h4>REZERWACJA OBOWIĄZKOWA</h4>
+              <p>Na weekend kwietniowy zarezerwuj <strong>minimum 2–3 tygodnie wcześniej</strong> przez <a href="https://noaresto.ee" target="_blank">noaresto.ee</a>. Sobota trudniejsza niż piątek.</p>
+            </div>
+          </div>
+          <p><strong>Alternatywy:</strong></p>
+          <ul style="margin-left: 1.2rem">
+            <li><strong>180° by Matthias Diether</strong> — ★★ Michelin, najwyżej oceniana restauracja Estonii, €180–220, rezerwacja 3–4 tyg. wcześniej</li>
+            <li><strong>Restaurant Ö</strong> — nowa estońska w centrum, €70–90, kameralnie</li>
+            <li><strong>Rataskaevu 16</strong> — klasyka estońska w średniej cenie (€35–50), z duszą</li>
+          </ul>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 3 -->
+<section class="panel" id="day3">
+  <h2>Sobota 11 kwietnia · Telliskivi, Kalamaja, Kadriorg</h2>
+  <p class="panel-intro">Drugie oblicze Tallinna: drewniane domy Kalamai, kreatywne Telliskivi i barokowy pałac Piotra I w Kadriorgu.</p>
+
+  <div class="timeline">
+
+    <div class="t-item">
+      <span class="t-time">09:00 · Śniadanie</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🥐 Must Puudel</div>
+            <div class="card-subtitle">„Czarny pudel" — klimatyczna kawiarnia</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p><strong>Must Puudel</strong> (Müürivahe 20) — stare meble z lat 60., książki, wielkie kanapy, świetny omlet i kawa. €7–12. Hipstersko, ale bez nadęcia.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">10:00–13:00 · Telliskivi</span>
+      <div class="card open">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🎨 Telliskivi Creative City</div>
+            <div class="card-subtitle">Dawna fabryka kolejowa · dziś centrum kultury alternatywnej</div>
+            <div class="card-meta"><span class="tag free">Teren wolny</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🎨">
+            <img data-wiki="Telliskivi Creative City" alt="Telliskivi">
+            <div class="img-caption">Telliskivi Loomelinnak — dawna fabryka</div>
+          </div>
+          <p>20 min pieszo z hotelu (przez dworzec Balti Jaam). To dawne tereny <strong>radzieckich zakładów naprawy taboru kolejowego</strong>, opuszczone po 1991. W 2007 grupa estońskich przedsiębiorców kulturalnych zaczęła je przekształcać w największy ośrodek kreatywny w Estonii. Dziś ponad <strong>250 firm</strong>: studia graficzne, architektoniczne, galerie, koncept stores, restauracje.</p>
+          <div class="fact"><strong>Street art:</strong> największa publiczna galeria street artu w Tallinnie. Szukaj prac z festiwalu <em>Mextonia</em> (2017) i Edwarda von Lõngusa — „estońskiego Banksy'ego".</div>
+          <p><strong>Must-see:</strong></p>
+          <ul style="margin-left: 1.2rem">
+            <li><strong>Fotografiska Tallinn</strong> — filia szwedzkiego muzeum fotografii (€14, 10–21)</li>
+            <li><strong>Põhjala Tap Room</strong> — estońskie rzemieślnicze piwo</li>
+            <li><strong>Sveta Baar</strong> — kultowy klub</li>
+            <li><strong>Koncept stores:</strong> Reet Aus, Lasermaani (design)</li>
+          </ul>
+          <div class="links">
+            <a class="link-btn" href="https://telliskivi.cc/en/" target="_blank">Strona Telliskivi</a>
+            <a class="link-btn alt" href="https://www.fotografiska.com/tallinn/" target="_blank">Fotografiska</a>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">13:00 · Obiad</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🍔 F-hoone lub Põhjala Tap Room</div>
+            <div class="card-subtitle">Najbardziej lubiane miejsca w Telliskivi</div>
+            <div class="card-meta"><span class="tag price">€10–15</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p><strong>F-hoone</strong> — budynek F dawnej fabryki, wielkie okna, industrial chic. Burger z łosiem €14, zupa €7. Często tłumy.</p>
+          <p><strong>Põhjala Tap Room</strong> — 24 kurki z kraftem własnego warzenia, smoked meat, tacos, ramen. €12–20.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">14:00 · Targ Balti Jaam</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🐟 Balti Jaama Turg</div>
+            <div class="card-subtitle">Targ przy dworcu — bazar, ryby, street food</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🐟">
+            <img data-wiki="Balti jaam" alt="Dworzec Balti Jaam">
+            <div class="img-caption">Balti jaam — dworzec kolejowy</div>
+          </div>
+          <p>3 minuty od Telliskivi — rewelacyjnie odnowiony w 2017 targ. Bazar warzywny, rybny, mięsny, food court i antyki. Spróbuj <strong>marynowanych śledzi z cebulą i śmietaną</strong>, kup kiluvõileib na drogę.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">14:45–15:30 · Spacer przez Kalamaja</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🏘️ Kalamaja — dzielnica drewnianych domów</div>
+            <div class="card-subtitle">XIX-wieczne domy robotników fabrycznych</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🏘️">
+            <img data-wiki="Kalamaja" alt="Kalamaja">
+            <div class="img-caption">Kalamaja — styl „Tallinna maja"</div>
+          </div>
+          <p>Nazwa „rybi dom" — osada rybacka od XIV w. W XIX w. postawiono setki <strong>drewnianych domów wielorodzinnych</strong> — styl <strong>„Tallinna maja"</strong>: dwupiętrowy dom z drewnianą elewacją w pastelach i cegłą w środkowej części.</p>
+          <div class="fact">W czasach sowieckich Kalamaja była dzielnicą biedy. W XXI w. stała się najmodniejszą częścią miasta.</div>
+          <p>Po drodze: <strong>Patarei</strong> — XIX-wieczna fortyfikacja morska, potem więzienie carskie i sowieckie. Dziś pomnik ofiar komunizmu.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">15:45 · Tramwaj do Kadriorg</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🌳 Park i Pałac Kadriorg</div>
+            <div class="card-subtitle">Barokowy pałac Piotra Wielkiego dla Katarzyny</div>
+            <div class="card-meta"><span class="tag price">pałac €8 · park wolny</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🌳">
+            <img data-wiki="Kadriorg Palace" alt="Pałac Kadriorg">
+            <div class="img-caption">Kadriorg — barok Niccolò Michettiego (1718)</div>
+          </div>
+          <p>Tramwajem 1 lub 3 (10 min). <strong>Kadriorg</strong> = estonizacja niemieckiego „Catharinenthal". Założony w 1718 przez <strong>Piotra I</strong> dla żony Katarzyny. Pałac — projekt włoskiego architekta <strong>Niccolò Michettiego</strong> — to jeden z nielicznych przykładów <strong>włoskiego baroku tak daleko na północy Europy</strong>.</p>
+          <p>Dziś mieści <strong>Muzeum Sztuki Zagranicznej</strong>. Park piękny, ale w kwietniu zimny — zaplanuj raczej przejście.</p>
+          <div class="fact"><strong>W pobliżu:</strong> rezydencja prezydenta Estonii, pomnik katastrofy MS Estonia oraz <strong>KUMU</strong>.</div>
+        </div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🎨 KUMU — Estońskie Muzeum Sztuki</div>
+            <div class="card-subtitle">European Museum of the Year 2008</div>
+            <div class="card-meta"><span class="tag price">€12</span><span class="tag time">1–1,5 h</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🏛️">
+            <img data-wiki="Kumu Art Museum" alt="KUMU">
+            <div class="img-caption">KUMU — proj. Pekka Vapaavuori (2006)</div>
+          </div>
+          <p>Spektakularny budynek z miedzi, betonu i wapienia — projekt fińskiego architekta <strong>Pekki Vapaavuori</strong>, wybrany spośród 232 projektów. Otwarte w 2006, w 2008 — <strong>European Museum of the Year</strong>.</p>
+          <p>Kolekcja to <strong>klucz do estońskiej tożsamości</strong>: malarstwo bałtycko-niemieckie, narodowy romantyzm XIX w. (Johann Köler), awangarda, sztuka sowiecka i współczesna.</p>
+          <div class="fact"><strong>Uwaga:</strong> KUMU zamknięte w poniedziałki. Pt i sob: 10–18.</div>
+          <div class="links">
+            <a class="link-btn" href="https://kumu.ekm.ee/en/" target="_blank">Strona KUMU</a>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">18:00 · Kolacja</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🍲 Rataskaevu 16 lub Von Krahli Aed</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p>Jeśli nie byłeś w czwartek — <strong>Rataskaevu 16</strong>. Pieczona kaczka lub jagnięcina (€22). Rezerwuj rano tego samego dnia.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">21:00 · Opcjonalnie — Muzeum KGB</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🕵️ Muzeum KGB w hotelu Viru</div>
+            <div class="card-subtitle">23. piętro · wycieczka z przewodnikiem</div>
+            <div class="card-meta"><span class="tag price">€15</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🏨">
+            <img data-wiki="Hotel Viru" alt="Hotel Viru">
+            <div class="img-caption">Hotel Sokos Viru — sowiecki wieżowiec (1972)</div>
+          </div>
+          <p>Hotel Sokos Viru był jedynym hotelem dla obcokrajowców w sowieckim Tallinnie. Na 23. piętrze — oficjalnie „nieistniejącym" — mieściło się <strong>tajne centrum nasłuchu KGB</strong>. Po 1991 agenci uciekli zostawiając sprzęt — teletypy, mikrofony, popielniczki z radzieckimi papierosami. Tylko z przewodnikiem, <strong>rezerwacja obowiązkowa</strong>.</p>
+          <div class="links">
+            <a class="link-btn" href="https://www.viru.ee/kgb-museum/" target="_blank">Rezerwacja</a>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DAY 4 -->
+<section class="panel" id="day4">
+  <h2>Niedziela 12 kwietnia · Domknięcie i wylot</h2>
+  <p class="panel-intro">Ostatni poranek: kościół św. Olafa, Muzeum Okupacji, Rotermann — i tramwaj na lotnisko o 15:00.</p>
+
+  <div class="timeline">
+
+    <div class="t-item">
+      <span class="t-time">08:30 · Śniadanie</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🥐 Śniadanie w hotelu lub RØST</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p>Spokojne śniadanie. Wypakuj już bagaż, zostaw w hotelowym depozycie.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">09:30–10:45 · Wieża Oleviste</span>
+      <div class="card open">
+        <div class="card-head">
+          <div>
+            <div class="card-title">⛪ Kościół św. Olafa (Oleviste kirik)</div>
+            <div class="card-subtitle">Kiedyś najwyższy budynek świata</div>
+            <div class="card-meta"><span class="tag free">Kościół wolny</span><span class="tag price">Wieża €5</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="⛪">
+            <img data-wiki="St. Olaf's Church, Tallinn" alt="Oleviste">
+            <div class="img-caption">Oleviste kirik — 123 m iglica</div>
+          </div>
+          <p>Pierwsza wzmianka z 1267, ale to XVI-wieczna odbudowa dała mu sławę: wieża mierzyła wtedy <strong>159 m — najwyższa budowla świata w latach 1549–1625</strong>. Iglica służyła jako znak nawigacyjny — widoczna z 60 km. Po <strong>ośmiu uderzeniach pioruna i trzech pożarach</strong> obecna wieża ma „tylko" 123 m.</p>
+          <div class="fact"><strong>Legenda Olafa:</strong> miasto ogłosiło, że zapłaci budowniczemu, jeśli zbuduje najwyższą wieżę świata, ale <strong>nie dowiedzą się jego imienia</strong>. Budowniczy przyjął wyzwanie. Gdy skończył, spadł z wieży — z jego ust wypełzły ropucha i wąż. Wtedy poznano imię: <em>Olaf</em>.</div>
+          <p><strong>Wejście na wieżę:</strong> 258 stopni. Otwarte 1 kwietnia – 31 października, 10–18. W kwietniu pusto — możesz być jedynym turystą. Widok <strong>lepszy niż z Toompea</strong>.</p>
+          <p>Za sowietów KGB miało tu anteny nasłuchowe i nadawcze.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">11:00–11:30 · Mury i ulica Pikk</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🏰 Mury miejskie · ulica Pikk</div>
+            <div class="card-subtitle">Spacer po murach z XIV w. · Bractwo Czarnogłowych</div>
+            <div class="card-meta"><span class="tag price">€5</span><span class="tag time">30 min</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🏰">
+            <img data-wiki="Walls of Tallinn" alt="Mury Tallinna">
+            <div class="img-caption">Mury i baszty Starego Miasta</div>
+          </div>
+          <p>Z 2,35 km pierwotnych murów i 46 baszt zachowało się <strong>1,85 km i 26 baszt</strong> — najlepszy zachowany system fortyfikacyjny średniowiecznej Europy Północnej.</p>
+          <p><strong>Ulica Pikk</strong> („Długa") — główna ulica Dolnego Miasta. Po drodze:</p>
+          <ul style="margin-left: 1.2rem">
+            <li><strong>Kolm Õde</strong> („Trzy Siostry") — kamienice XIV/XV w., dziś butikowy hotel</li>
+            <li><strong>Bractwo Czarnogłowych</strong> (Pikk 26) — renesansowy budynek gildii niezamężnych kupców z 1597</li>
+            <li><strong>Wielka Gildia Kupiecka</strong> (Pikk 17, 1410) — dziś Muzeum Historyczne Estonii</li>
+            <li><strong>Pikk 59</strong> — dawna siedziba KGB, w piwnicach cele</li>
+          </ul>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">11:45–13:00 · Muzeum Okupacji</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🕯️ Vabamu — Muzeum Okupacji i Wolności</div>
+            <div class="card-subtitle">Historia Estonii 1940–1991</div>
+            <div class="card-meta"><span class="tag price">€14</span><span class="tag time">1–1,5 h</span></div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p>Nowoczesne, świetnie zrealizowane muzeum o trzech okupacjach: sowieckiej 1940–1941, niemieckiej 1941–1944, ponownie sowieckiej 1944–1991. Multimedia, nagrania świadków, rzeczy codzienne z lat 40.–80. Poruszający dział o <strong>deportacjach na Syberię</strong> — w jednej nocy 14 czerwca 1941 wywieziono <strong>10 000 Estończyków</strong>, a w marcu 1949 kolejnych 20 000.</p>
+          <div class="fact"><strong>Bliskość:</strong> Vabamu jest 5 min pieszo od hotelu Hestia Kentmanni — idealne na ostatni punkt.</div>
+          <div class="links">
+            <a class="link-btn" href="https://www.vabamu.ee/en" target="_blank">Strona Vabamu</a>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">13:15 · Lunch w Rotermannie</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🍜 Rotermann Quarter · szybki lunch</div>
+            <div class="card-subtitle">Dzielnica przemysłowa po rewitalizacji</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <div class="img-wrap" data-emoji="🏭">
+            <img data-wiki="Rotermann Quarter" alt="Rotermann">
+            <div class="img-caption">Rotermanni kvartal — post-industrial</div>
+          </div>
+          <p><strong>Rotermann</strong> — dawny kompleks młynów i magazynów XIX-wiecznego kupca Christiana Abrahama Rotermanna. Między 2007 a 2020 przekształcono go w błyskotliwy przykład <strong>post-industrialnej architektury</strong> — ceglane fabryki zderzone z nowoczesnymi dobudowami z drewna i corten-stali. Jedna z najbardziej nagradzanych rewitalizacji w regionie.</p>
+          <p><strong>Gdzie jeść:</strong> Sfäär, Põhjaka, Platz. €10–15. Po lunchu przejdź się uliczkami — to też „muzeum pod gołym niebem".</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <span class="t-time">14:30 · Transfer na lotnisko</span>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">🛫 Droga na lotnisko</div>
+            <div class="card-subtitle">Tramwaj 4 · wylot 17:30</div>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p>Z hotelu bagaż (ok. 14:30) → Vabaduse väljak → tramwaj 4 w kierunku Lennujaam. ~20 min jazdy + ~5 min do terminala. Przy bramce ok. 15:30–15:45.</p>
+          <div class="fact"><strong>Plan B:</strong> Bolt (€8–10), 15 min bez przesiadek.</div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOD -->
+<section class="panel" id="food">
+  <h2>🍽️ Kuchnia estońska i restauracje</h2>
+  <p class="panel-intro">Mieszanka tradycji chłopskiej, wpływów niemieckich, rosyjskich, skandynawskich i nowoczesnej „Nordic cuisine".</p>
+
+  <h3>Czego koniecznie spróbować</h3>
+  <div class="dishes">
+    <div class="dish"><span class="icon">🍞</span><strong>Leib</strong><span>Ciemny chleb żytni — estońska świętość.</span></div>
+    <div class="dish"><span class="icon">🐟</span><strong>Kiluvõileib</strong><span>Kanapka ze szprotami, jajkiem i cebulą.</span></div>
+    <div class="dish"><span class="icon">🥔</span><strong>Mulgipuder</strong><span>Purée z ziemniaków i kaszy jęczmiennej z boczkiem.</span></div>
+    <div class="dish"><span class="icon">🌭</span><strong>Verivorst</strong><span>Kaszanka z krwi i kaszy.</span></div>
+    <div class="dish"><span class="icon">🐷</span><strong>Sült</strong><span>Galaretka mięsna.</span></div>
+    <div class="dish"><span class="icon">🥛</span><strong>Kama</strong><span>Mąka z prażonych zbóż + kefir + jagody.</span></div>
+    <div class="dish"><span class="icon">🌶️</span><strong>Rosolje</strong><span>Sałatka z buraków, śledzia i jabłka.</span></div>
+    <div class="dish"><span class="icon">🍺</span><strong>Vana Tallinn</strong><span>Likier rumowo-ziołowy, 40–50%.</span></div>
+  </div>
+
+  <h3>Restauracje — tania i średnia półka</h3>
+  <div class="resto"><h4>III Draakon <span class="price-tag">€</span></h4><p>Średniowieczna jadłodajnia w Ratuszu. Łosiowa zupa €2, paszteciki €2. Bez widelca.</p><p class="addr">📍 Raekoja plats 1</p></div>
+  <div class="resto"><h4>F-hoone <span class="price-tag">€€</span></h4><p>Ikona Telliskivi, industrial chic, burger z łosiem. €10–15.</p><p class="addr">📍 Telliskivi 60a</p></div>
+  <div class="resto"><h4>Põhjala Tap Room <span class="price-tag">€€</span></h4><p>24 kurki z lokalnym kraftem, street food i BBQ.</p><p class="addr">📍 Telliskivi 60a</p></div>
+  <div class="resto"><h4>Von Krahli Aed <span class="price-tag">€€</span></h4><p>Sezonowe menu, dużo wege, klimat lat 70. €12–20.</p><p class="addr">📍 Rataskaevu 8</p></div>
+  <div class="resto"><h4>Leib Resto ja Aed <span class="price-tag">€€€</span></h4><p>Nowoczesna estońska w ukrytym ogrodzie przy murach.</p><p class="addr">📍 Uus 31</p></div>
+  <div class="resto"><h4>Rataskaevu 16 <span class="price-tag">€€€</span></h4><p>Kultowe miejsce — pieczona łopatka jagnięca €22. REZERWACJA KONIECZNA.</p><p class="addr">📍 Rataskaevu 16</p></div>
+  <div class="resto"><h4>Kompressor <span class="price-tag">€</span></h4><p>Estońskie naleśniki (pannkoogid) — wielkie jak talerze.</p><p class="addr">📍 Rataskaevu 3</p></div>
+  <div class="resto"><h4>Must Puudel <span class="price-tag">€€</span></h4><p>„Czarny Pudel" — kawiarnia ze starymi meblami.</p><p class="addr">📍 Müürivahe 20</p></div>
+
+  <h3>🌟 Jedno wyjście „na bogato"</h3>
+  <div class="resto fine"><h4>NOA Chef's Hall <span class="price-tag">★ Michelin</span></h4><p><strong>Menu deg. ~€120–140.</strong> Szef Tõnis Siigur, widok na zatokę. 15 min taxi z centrum. <strong>REZERWUJ 2–3 TYGODNIE WCZEŚNIEJ.</strong></p><p class="addr">📍 Ranna tee 3, Viimsi · noaresto.ee</p></div>
+  <div class="resto fine"><h4>180° by Matthias Diether <span class="price-tag">★★ Michelin</span></h4><p>Najwyżej oceniana restauracja Estonii. €180–220.</p><p class="addr">📍 Kuunari 4, Noblessner</p></div>
+  <div class="resto fine"><h4>Restaurant Ö <span class="price-tag">€€€€</span></h4><p>Nowa estońska w centrum. Menu deg. €70–90.</p><p class="addr">📍 Mere pst 6e</p></div>
+
+  <div class="banner">
+    <span class="icon">📅</span>
+    <div>
+      <h4>Jak rezerwować?</h4>
+      <p>Większość restauracji ma formularz rezerwacji na stronie WWW. Obsługa mówi świetnie po angielsku. Na fine dining na sobotę — <strong>rezerwuj od razu</strong>.</p>
+    </div>
+  </div>
+
+  <h3>Pułapki turystyczne</h3>
+  <div class="info-box" style="border-left: 4px solid var(--medieval)">
+    <h4>⚠️ Olde Hansa</h4>
+    <p>Najsłynniejsza „średniowieczna" restauracja — kostiumy, świece, lutnia. Atmosfera fantastyczna, ale <strong>ceny wysokie</strong> (€50–70/osobę), jedzenie OK. Jeśli chcesz doświadczenia — idź na deser lub piwo z cynamonem.</p>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section class="panel" id="history">
+  <h2>📜 Historia i kultura Estonii</h2>
+  <p class="panel-intro">Mały kraj (1,3 mln mieszkańców), ale z bogatą historią — Duńczycy, Krzyżacy, Szwedzi, Rosjanie, Sowieci, Niemcy, aż do niepodległości 1991.</p>
+
+  <div class="gallery">
+    <div class="img-wrap" data-emoji="🇪🇪">
+      <img data-wiki="Estonia" alt="Estonia">
+      <div class="img-caption">Estonia — flaga i symbole</div>
+    </div>
+    <div class="img-wrap" data-emoji="🏛️">
+      <img data-wiki="Hanseatic League" alt="Hanza">
+      <div class="img-caption">Hanza — Liga Hanzeatycka</div>
+    </div>
+    <div class="img-wrap" data-emoji="📜">
+      <img data-wiki="Singing Revolution" alt="Rewolucja Śpiewająca">
+      <div class="img-caption">Rewolucja Śpiewająca 1987–1991</div>
+    </div>
+  </div>
+
+  <h3>Skrót dziejów</h3>
+  <div class="history-timeline">
+    <div class="history-event"><div class="year">do 1200</div><div class="desc">Fińsko-ugryjskie plemiona estońskie — osady rybackie i rolnicze, bogata mitologia.</div></div>
+    <div class="history-event"><div class="year">1219</div><div class="desc">Duński król <strong>Waldemar II</strong> podbija Tallinn — nazwa: <em>Taani linn</em> = „duński gród".</div></div>
+    <div class="history-event"><div class="year">1227–1346</div><div class="desc">Zakon kawalerów mieczowych, potem <strong>Krzyżacy</strong>. Tallinn wstępuje do <strong>Hanzy</strong> (1285).</div></div>
+    <div class="history-event"><div class="year">1346</div><div class="desc">Duńczycy sprzedają Estonię zakonowi za 19 000 marek. Era bałtycko-niemiecka.</div></div>
+    <div class="history-event"><div class="year">1561–1710</div><div class="desc"><strong>Panowanie szwedzkie</strong> — „dobre stare szwedzkie czasy". Uniwersytet w Tartu (1632).</div></div>
+    <div class="history-event"><div class="year">1710–1918</div><div class="desc">Wielka Wojna Północna — <strong>Piotr I</strong> zdobywa Tallinn. Estonia w Imperium Rosyjskim.</div></div>
+    <div class="history-event"><div class="year">24 lutego 1918</div><div class="desc"><strong>Niepodległość!</strong> Po walce z bolszewikami Estonia wygrywa wojnę (1918–1920).</div></div>
+    <div class="history-event"><div class="year">1940</div><div class="desc"><strong>Pakt Ribbentrop-Mołotow</strong> — okupacja sowiecka. Deportacje na Syberię.</div></div>
+    <div class="history-event"><div class="year">1941–1944</div><div class="desc">Okupacja niemiecka. Holocaust społeczności żydowskiej.</div></div>
+    <div class="history-event"><div class="year">9 marca 1944</div><div class="desc"><strong>Sowieckie bombardowanie Tallinna</strong> — 800 cywilów zabitych, 40% centrum zniszczone.</div></div>
+    <div class="history-event"><div class="year">1944–1991</div><div class="desc">Druga okupacja sowiecka. Deportacja marca 1949 (20 000 na Syberię). Partyzantka „leśnych braci".</div></div>
+    <div class="history-event"><div class="year">1987–1991</div><div class="desc"><strong>Rewolucja Śpiewająca</strong>. 23 sierpnia 1989 <strong>Bałtycki Łańcuch</strong> — 2 mln ludzi od Tallinna do Wilna (670 km).</div></div>
+    <div class="history-event"><div class="year">20 sierpnia 1991</div><div class="desc"><strong>Niepodległość!</strong> Podczas puczu Janajewa estoński parlament ogłasza przywrócenie niepodległości.</div></div>
+    <div class="history-event"><div class="year">2004</div><div class="desc">Estonia wstępuje do <strong>UE i NATO</strong>.</div></div>
+    <div class="history-event"><div class="year">2007</div><div class="desc"><strong>Pierwszy cyberatak państwa na państwo</strong> — Rosja atakuje estońskie serwery.</div></div>
+    <div class="history-event"><div class="year">2011</div><div class="desc">Estonia wprowadza <strong>euro</strong>.</div></div>
+  </div>
+
+  <h3>Dlaczego Stare Miasto tak dobrze się zachowało?</h3>
+  <div class="info-box">
+    <p>Tallinn jest jednym z <strong>najlepiej zachowanych średniowiecznych miast Europy</strong> (UNESCO od 1997). Wynika to z:</p>
+    <ul>
+      <li><strong>Spadek Hanzy w XVI w.</strong> — Tallinn nie miał pieniędzy na przebudowę</li>
+      <li><strong>Pożary oszczędziły kamienne budowle</strong> — spłonęły drewniane dachy, mury ocalały</li>
+      <li><strong>Bombardowanie 1944</strong> zniszczyło zaledwie kilka obiektów — Armia Czerwona celowała w dzielnice mieszkalne</li>
+      <li><strong>W ZSRR Tallinn był „eksponatem"</strong> — używano go do zagranicznych kontaktów, inwestowano w konserwację</li>
+    </ul>
+  </div>
+
+  <h3>Estonia cyfrowa — e-Estonia</h3>
+  <div class="info-box">
+    <p>Estonia jest <strong>najbardziej cyfrowym krajem świata</strong>:</p>
+    <ul>
+      <li><strong>99% usług publicznych</strong> online — rejestracja firmy w 15 minut!</li>
+      <li><strong>e-Residency</strong> (2014)</li>
+      <li><strong>Głosowanie internetowe</strong> od 2005</li>
+      <li><strong>Narodzeni w Estonii:</strong> Skype, Wise, Bolt, Playtech</li>
+      <li>Tallinn ma <strong>więcej jednorożców na mieszkańca</strong> niż jakiekolwiek inne miasto w Europie</li>
+    </ul>
+  </div>
+
+  <h3>Podstawowe zwroty estońskie</h3>
+  <div class="phrases">
+    <div class="phrase"><span class="et">Tere</span><span class="pl">Cześć / Dzień dobry</span></div>
+    <div class="phrase"><span class="et">Aitäh</span><span class="pl">Dziękuję</span></div>
+    <div class="phrase"><span class="et">Palun</span><span class="pl">Proszę</span></div>
+    <div class="phrase"><span class="et">Head aega</span><span class="pl">Do widzenia</span></div>
+    <div class="phrase"><span class="et">Jah / Ei</span><span class="pl">Tak / Nie</span></div>
+    <div class="phrase"><span class="et">Vabandust</span><span class="pl">Przepraszam</span></div>
+    <div class="phrase"><span class="et">Terviseks!</span><span class="pl">Na zdrowie!</span></div>
+    <div class="phrase"><span class="et">Kui palju?</span><span class="pl">Ile kosztuje?</span></div>
+    <div class="phrase"><span class="et">Üks õlu, palun</span><span class="pl">Jedno piwo poproszę</span></div>
+    <div class="phrase"><span class="et">Arve, palun</span><span class="pl">Rachunek poproszę</span></div>
+  </div>
+  <div class="fact"><strong>Fonetyka:</strong> <em>ä</em> — między a i e, <em>õ</em> — między y a e, <em>ü</em> — jak niemieckie ü. Akcent zawsze na pierwszej sylabie. Estoński ma <strong>14 przypadków</strong>. 99% Estończyków mówi świetnie po angielsku.</div>
+</section>
+
+<!-- PRACTICAL -->
+<section class="panel" id="practical">
+  <h2>💡 Praktyczne informacje</h2>
+  <p class="panel-intro">Wszystko, co musisz wiedzieć — pogoda, Tallinn Card, płatności, bezpieczeństwo.</p>
+
+  <div class="grid">
+    <div class="info-box">
+      <h4>🌡️ Pogoda w kwietniu</h4>
+      <p>Dzień: <strong>5–10°C</strong><br>Noc: <strong>0–5°C</strong><br>Możliwy deszcz, czasem mokry śnieg.</p>
+      <p><strong>Co zabrać:</strong> ciepła kurtka przeciwwiatrowa, czapka, wodoodporne buty (bruk śliski!), szalik, parasol.</p>
+    </div>
+
+    <div class="info-box">
+      <h4>💳 Płatności</h4>
+      <p>Estonia to <strong>raj kart bezstykowych</strong> — Apple Pay i Google Pay wszędzie. Gotówka zbędna.</p>
+      <p><strong>Napiwki:</strong> 5–10% w restauracjach.</p>
+    </div>
+
+    <div class="info-box">
+      <h4>🎫 Tallinn Card</h4>
+      <p>24h: <strong>~€32</strong> · 48h: <strong>~€47</strong> · 72h: <strong>~€57</strong></p>
+      <p><strong>Kalkulacja dla Twojego planu:</strong><br>Dzień 2: Niguliste 15 + Kiek 14 + Raekoda 5 ≈ €34<br>Dzień 3: KUMU 12 + Fotografiska 14 = €26<br>Dzień 4: Vabamu 14 + Oleviste 5 = €19<br><strong>Razem ~€79 bez karty</strong> · Karta 72h €57 → <strong>oszczędzasz ~€22!</strong></p>
+      <div class="links">
+        <a class="link-btn" href="https://www.visittallinn.ee/eng/visitor/plan/tallinn-card" target="_blank">Kup Tallinn Card</a>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>🚊 Komunikacja miejska</h4>
+      <p>Bilety: aplikacja <strong>Pilet.ee</strong> (QR), u kierowcy (€2) lub karta Ühiskaart.</p>
+      <p><strong>Dzienny:</strong> €4,50 — nieograniczone. Stare Miasto to deptak.</p>
+    </div>
+
+    <div class="info-box">
+      <h4>🔒 Bezpieczeństwo</h4>
+      <p>Tallinn jest <strong>bardzo bezpieczny</strong> — jedna z najspokojniejszych stolic Europy.</p>
+    </div>
+
+    <div class="info-box">
+      <h4>📱 Aplikacje</h4>
+      <ul>
+        <li><strong>Bolt</strong> — taxi i jedzenie</li>
+        <li><strong>Pilet.ee</strong> — bilety</li>
+        <li><strong>Google Maps</strong> — nawigacja</li>
+        <li><strong>Visit Tallinn</strong> — oficjalna</li>
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <h4>📶 WiFi</h4>
+      <p>Tallinn jest <strong>pokryty darmowym WiFi publicznym</strong> (od 2001!). Jako UE — polski abonament bez roamingu.</p>
+    </div>
+
+    <div class="info-box">
+      <h4>🕐 Strefa czasowa</h4>
+      <p>Estonia = <strong>EET (+1h od Polski)</strong>. Muzea 10–18, w pon. często zamknięte. Sklepy do 22–23.</p>
+    </div>
+  </div>
+
+  <h3>Ważne linki</h3>
+  <div class="info-box">
+    <ul style="font-size: 0.95rem">
+      <li><a href="https://www.visittallinn.ee/pol" target="_blank">Visit Tallinn (po polsku!)</a> — oficjalny przewodnik</li>
+      <li><a href="https://www.visitestonia.com/" target="_blank">Visit Estonia</a></li>
+      <li><a href="https://transport.tallinn.ee/" target="_blank">Tallinna ühistransport</a></li>
+      <li><a href="https://www.tallinn-airport.ee/" target="_blank">Lotnisko Tallinn</a></li>
+      <li><a href="https://pl.wikipedia.org/wiki/Tallinn" target="_blank">Wikipedia: Tallinn</a></li>
+      <li><a href="https://commons.wikimedia.org/wiki/Category:Tallinn" target="_blank">Wikimedia: galeria zdjęć Tallinna</a></li>
+    </ul>
+  </div>
+
+  <div class="banner">
+    <span class="icon">✅</span>
+    <div>
+      <h4>Checklist przed wyjazdem</h4>
+      <p>☐ Rezerwacja fine dining (NOA / 180° / Ö)<br>
+      ☐ Kupiona Tallinn Card (online, taniej)<br>
+      ☐ Zainstalowany Bolt i Pilet.ee<br>
+      ☐ Ciepła kurtka i wodoodporne buty<br>
+      ☐ Karta bankowa (zbędna gotówka)<br>
+      ☐ Dokument tożsamości (UE = dowód)<br>
+      ☐ Hotel zarezerwowany (Hestia Kentmanni ✓)</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>Head reisi Tallinnasse!</strong> Udanej podróży do Tallinna!</p>
+  <p style="opacity: 0.7; font-size: 0.82rem; margin-top: 1rem">
+    Plan dla pobytu 9–12 kwietnia 2026 w hotelu Hestia Kentmanni.<br>
+    Zdjęcia ładowane dynamicznie z Wikipedii. Ceny i godziny potwierdź przed wyjazdem.
+  </p>
+</footer>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.panel;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(target).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Re-trigger image load for newly visible panel
+      loadVisibleImages();
+    });
+  });
+
+  // Card expand/collapse
+  document.querySelectorAll('.card-head').forEach(head => {
+    head.addEventListener('click', () => {
+      head.parentElement.classList.toggle('open');
+    });
+  });
+
+  // Wikipedia image loader using REST API
+  const imageCache = {};
+  async function loadWikiImage(img) {
+    if (img.dataset.loaded) return;
+    img.dataset.loaded = 'pending';
+    const title = img.dataset.wiki;
+    if (!title) return;
+    try {
+      let thumbSrc = imageCache[title];
+      if (!thumbSrc) {
+        const resp = await fetch(
+          `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`,
+          { headers: { 'Accept': 'application/json' } }
+        );
+        if (!resp.ok) throw new Error('no page');
+        const data = await resp.json();
+        thumbSrc = (data.originalimage && data.originalimage.source)
+                || (data.thumbnail && data.thumbnail.source);
+        if (!thumbSrc) throw new Error('no image');
+        // Request larger thumbnail
+        thumbSrc = thumbSrc.replace(/\/\d+px-/, '/800px-');
+        imageCache[title] = thumbSrc;
+      }
+      img.onload = () => img.classList.add('loaded');
+      img.onerror = () => { img.dataset.loaded = 'error'; };
+      img.src = thumbSrc;
+      img.dataset.loaded = 'done';
+    } catch(e) {
+      img.dataset.loaded = 'error';
+    }
+  }
+
+  function loadVisibleImages() {
+    document.querySelectorAll('.panel.active img[data-wiki], .hero img[data-wiki]').forEach(img => {
+      if (!img.dataset.loaded) loadWikiImage(img);
+    });
+  }
+
+  // Initial load
+  window.addEventListener('load', () => {
+    loadVisibleImages();
+    // Also preload hero image
+    const hero = document.querySelector('.hero-img');
+    if (hero) {
+      hero.addEventListener('load', () => hero.classList.add('loaded'));
+    }
+  });
+</script>
+
+</body>
+</html>
