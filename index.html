@@ -29,14 +29,18 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
-  .hero {
+  /* START HERO (inside first panel) */
+  .start-hero {
+    position: relative;
     background: linear-gradient(135deg, var(--baltic) 0%, var(--baltic-light) 60%, #3a6ba5 100%);
     color: white;
-    padding: 3rem 1.5rem 4rem;
-    position: relative;
+    padding: 3rem 2rem 3.5rem;
+    border-radius: 16px;
     overflow: hidden;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-lg);
   }
-  .hero::before {
+  .start-hero::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -44,8 +48,22 @@
       radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0%, transparent 40%),
       radial-gradient(circle at 80% 60%, rgba(200,148,82,0.12) 0%, transparent 40%);
     pointer-events: none;
+    z-index: 1;
   }
-  .hero-content { max-width: 1100px; margin: 0 auto; position: relative; }
+  .start-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .start-hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s;
+  }
+  .start-hero-bg img.loaded { opacity: 0.25; }
+  .start-hero-content { position: relative; z-index: 2; }
   .hero-badge {
     display: inline-block;
     padding: 0.4rem 1rem;
@@ -55,37 +73,27 @@
     font-size: 0.85rem;
     letter-spacing: 0.05em;
     margin-bottom: 1rem;
+    backdrop-filter: blur(10px);
   }
-  .hero h1 {
-    font-size: clamp(2rem, 5vw, 3.8rem);
+  .start-hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 800;
     letter-spacing: -0.02em;
     margin-bottom: 0.75rem;
     line-height: 1.1;
+    color: white;
   }
-  .hero h1 .em { color: var(--gold-light); }
-  .hero p { font-size: 1.15rem; opacity: 0.92; max-width: 680px; }
+  .start-hero h1 .em { color: var(--gold-light); }
+  .start-hero .lead { font-size: 1.1rem; opacity: 0.95; max-width: 700px; }
   .hero-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem 2.5rem;
-    margin-top: 1.75rem;
+    gap: 1rem 2rem;
+    margin-top: 1.5rem;
     font-size: 0.95rem;
   }
-  .hero-meta div { display: flex; align-items: center; gap: 0.5rem; opacity: 0.9; }
+  .hero-meta div { display: flex; align-items: center; gap: 0.5rem; opacity: 0.95; }
   .hero-meta strong { color: var(--gold-light); }
-  .hero-img {
-    position: absolute;
-    right: -60px;
-    bottom: -40px;
-    width: 40%;
-    max-width: 480px;
-    opacity: 0.18;
-    filter: blur(1px);
-    border-radius: 20px;
-    transition: opacity 0.6s;
-  }
-  .hero-img.loaded { opacity: 0.35; }
 
   .tabs {
     position: sticky;
@@ -462,8 +470,7 @@
   footer a { color: var(--gold-light); }
 
   @media (max-width: 640px) {
-    .hero { padding: 2rem 1rem 2.5rem; }
-    .hero-img { display: none; }
+    .start-hero { padding: 2rem 1.25rem 2.5rem; }
     main { padding: 1.5rem 1rem 3rem; }
     .timeline { padding-left: 2rem; }
     .t-item::before { left: -1.75rem; }
@@ -474,24 +481,10 @@
 </head>
 <body>
 
-<header class="hero">
-  <img class="hero-img" data-wiki="Tallinn" alt="">
-  <div class="hero-content">
-    <span class="hero-badge">🇪🇪 9–12 kwietnia 2026 · 4 dni</span>
-    <h1>Tallinn<br><span class="em">średniowieczna perła Bałtyku</span></h1>
-    <p>Interaktywny plan zwiedzania stolicy Estonii — miasta, gdzie gotyckie wieże sąsiadują z cyfrową rewolucją, a jedno z najlepiej zachowanych Starych Miast w Europie wciąż żyje codziennym rytmem.</p>
-    <div class="hero-meta">
-      <div>🛬 <span>Przylot: <strong>czw 17:00</strong></span></div>
-      <div>🛫 <span>Wylot: <strong>nd 17:30</strong></span></div>
-      <div>🏨 <span><strong>Hestia Hotel Kentmanni 13</strong></span></div>
-      <div>💶 <span>Waluta: <strong>EUR</strong></span></div>
-    </div>
-  </div>
-</header>
-
 <nav class="tabs">
   <div class="tabs-inner">
-    <button class="tab active" data-panel="transport"><span class="emoji">🚊</span>Transport</button>
+    <button class="tab active" data-panel="start"><span class="emoji">🇪🇪</span>Start</button>
+    <button class="tab" data-panel="transport"><span class="emoji">🚊</span>Transport</button>
     <button class="tab" data-panel="day1"><span class="emoji">1️⃣</span>Czw 9.04</button>
     <button class="tab" data-panel="day2"><span class="emoji">2️⃣</span>Pt 10.04</button>
     <button class="tab" data-panel="day3"><span class="emoji">3️⃣</span>Sob 11.04</button>
@@ -504,8 +497,67 @@
 
 <main>
 
+<!-- START -->
+<section class="panel active" id="start">
+  <div class="start-hero">
+    <div class="start-hero-bg">
+      <img class="hero-img" data-wiki="Tallinn" alt="">
+    </div>
+    <div class="start-hero-content">
+      <span class="hero-badge">🇪🇪 9–12 kwietnia 2026 · 4 dni</span>
+      <h1>Tallinn<br><span class="em">średniowieczna perła Bałtyku</span></h1>
+      <p class="lead">Interaktywny plan zwiedzania stolicy Estonii — miasta, gdzie gotyckie wieże sąsiadują z cyfrową rewolucją, a jedno z najlepiej zachowanych Starych Miast w Europie wciąż żyje codziennym rytmem.</p>
+      <div class="hero-meta">
+        <div>🛬 <span>Przylot: <strong>czw 17:00</strong></span></div>
+        <div>🛫 <span>Wylot: <strong>nd 17:30</strong></span></div>
+        <div>🏨 <span><strong>Hestia Hotel Kentmanni 13</strong></span></div>
+        <div>💶 <span>Waluta: <strong>EUR</strong></span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 2rem">Co znajdziesz w tym planie</h3>
+  <div class="grid">
+    <div class="info-box">
+      <h4>🚊 Transport</h4>
+      <p>Jak dotrzeć z lotniska do hotelu (tramwaj 4, Bolt) i kiedy wyjść na lot powrotny.</p>
+    </div>
+    <div class="info-box">
+      <h4>📅 4 dni zwiedzania</h4>
+      <p>Szczegółowe plany dzień po dniu z timeline'em, atrakcjami, cenami i godzinami otwarcia.</p>
+    </div>
+    <div class="info-box">
+      <h4>🍽️ Kuchnia estońska</h4>
+      <p>Lokalne potrawy, polecane restauracje (tanie, średnie i jedna gwiazdka Michelin).</p>
+    </div>
+    <div class="info-box">
+      <h4>📜 Historia i kultura</h4>
+      <p>Oś czasu Estonii, ciekawostki o architekturze, podstawowe zwroty po estońsku.</p>
+    </div>
+    <div class="info-box">
+      <h4>💡 Praktyczne info</h4>
+      <p>Pogoda, Tallinn Card, aplikacje, płatności, checklist przed wyjazdem.</p>
+    </div>
+    <div class="info-box">
+      <h4>🖼️ Zdjęcia na żywo</h4>
+      <p>Obrazki budynków i miejsc ładują się dynamicznie z Wikipedii — otwórz z dostępem do internetu.</p>
+    </div>
+  </div>
+
+  <div class="banner">
+    <span class="icon">⚠️</span>
+    <div>
+      <h4>Dwie rzeczy do zrobienia TERAZ</h4>
+      <p>1. <strong>Zarezerwuj fine dining</strong> (NOA / 180° / Restaurant Ö) — 2–4 tygodnie wcześniej, szczególnie na sobotę.<br>
+      2. <strong>Kup Tallinn Card 72h online</strong> — zaoszczędzisz ok. €22 względem biletów pojedynczych.</p>
+    </div>
+  </div>
+
+  <p style="margin-top: 1.5rem; color: var(--stone); font-style: italic;">👉 Użyj zakładek na górze, aby przechodzić między sekcjami. Kliknij dowolną kartę atrakcji, aby rozwinąć szczegóły, historię i ciekawostki.</p>
+</section>
+
 <!-- TRANSPORT -->
-<section class="panel active" id="transport">
+<section class="panel" id="transport">
   <h2>🚊 Transport z lotniska i powrót</h2>
   <p class="panel-intro">Lotnisko Lennart Meri (TLL) leży zaledwie 4 km od centrum — to jedno z najbliżej położonych lotnisk w Europie. Do hotelu dotrzesz w 20–25 minut.</p>
 
@@ -657,22 +709,6 @@
   <p class="panel-intro">Dzień pełen murów, wież, gotyckich kościołów i widoków z Toompea. Wieczorem — jedyne „wyjście na bogato" tego wyjazdu.</p>
 
   <div class="timeline">
-
-    <div class="t-item">
-      <span class="t-time">09:00 · Śniadanie</span>
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">☕ RØST Bakery lub Reval Café</div>
-            <div class="card-subtitle">Kawa i drożdżówki</div>
-          </div>
-          <span class="chevron">▾</span>
-        </div>
-        <div class="card-body"><div class="card-body-inner">
-          <p><strong>RØST</strong> (Rotermann Quarter) — piekarnia rzemieślnicza, chleb na zakwasie, kardamonowe bułki. €7–10.<br><strong>Reval Café</strong> (Müürivahe) — lokalna sieciówka, szybka, na trasie.</p>
-        </div></div>
-      </div>
-    </div>
 
     <div class="t-item">
       <span class="t-time">10:00–11:00 · Niguliste</span>
@@ -907,22 +943,6 @@
   <div class="timeline">
 
     <div class="t-item">
-      <span class="t-time">09:00 · Śniadanie</span>
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">🥐 Must Puudel</div>
-            <div class="card-subtitle">„Czarny pudel" — klimatyczna kawiarnia</div>
-          </div>
-          <span class="chevron">▾</span>
-        </div>
-        <div class="card-body"><div class="card-body-inner">
-          <p><strong>Must Puudel</strong> (Müürivahe 20) — stare meble z lat 60., książki, wielkie kanapy, świetny omlet i kawa. €7–12. Hipstersko, ale bez nadęcia.</p>
-        </div></div>
-      </div>
-    </div>
-
-    <div class="t-item">
       <span class="t-time">10:00–13:00 · Telliskivi</span>
       <div class="card open">
         <div class="card-head">
@@ -1109,21 +1129,6 @@
   <p class="panel-intro">Ostatni poranek: kościół św. Olafa, Muzeum Okupacji, Rotermann — i tramwaj na lotnisko o 15:00.</p>
 
   <div class="timeline">
-
-    <div class="t-item">
-      <span class="t-time">08:30 · Śniadanie</span>
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">🥐 Śniadanie w hotelu lub RØST</div>
-          </div>
-          <span class="chevron">▾</span>
-        </div>
-        <div class="card-body"><div class="card-body-inner">
-          <p>Spokojne śniadanie. Wypakuj już bagaż, zostaw w hotelowym depozycie.</p>
-        </div></div>
-      </div>
-    </div>
 
     <div class="t-item">
       <span class="t-time">09:30–10:45 · Wieża Oleviste</span>
@@ -1424,15 +1429,48 @@
     </div>
   </div>
 
-  <h3>Ważne linki</h3>
+  <h3>Oficjalne źródła i transport</h3>
   <div class="info-box">
     <ul style="font-size: 0.95rem">
-      <li><a href="https://www.visittallinn.ee/pol" target="_blank">Visit Tallinn (po polsku!)</a> — oficjalny przewodnik</li>
-      <li><a href="https://www.visitestonia.com/" target="_blank">Visit Estonia</a></li>
-      <li><a href="https://transport.tallinn.ee/" target="_blank">Tallinna ühistransport</a></li>
-      <li><a href="https://www.tallinn-airport.ee/" target="_blank">Lotnisko Tallinn</a></li>
-      <li><a href="https://pl.wikipedia.org/wiki/Tallinn" target="_blank">Wikipedia: Tallinn</a></li>
-      <li><a href="https://commons.wikimedia.org/wiki/Category:Tallinn" target="_blank">Wikimedia: galeria zdjęć Tallinna</a></li>
+      <li><a href="https://www.visittallinn.ee/pol" target="_blank">Visit Tallinn (po polsku!)</a> — oficjalny przewodnik miasta</li>
+      <li><a href="https://www.visitestonia.com/" target="_blank">Visit Estonia</a> — krajowa strona turystyczna</li>
+      <li><a href="https://transport.tallinn.ee/" target="_blank">Tallinna ühistransport</a> — rozkłady komunikacji miejskiej</li>
+      <li><a href="https://www.tallinn-airport.ee/" target="_blank">Lotnisko Tallinn</a> — info o lotach i usługach</li>
+      <li><a href="https://pl.wikipedia.org/wiki/Tallinn" target="_blank">Wikipedia: Tallinn</a> — szczegółowe informacje historyczne</li>
+      <li><a href="https://commons.wikimedia.org/wiki/Category:Tallinn" target="_blank">Wikimedia Commons</a> — galeria zdjęć miasta</li>
+    </ul>
+  </div>
+
+  <h3>Dodatkowe wycieczki i atrakcje</h3>
+  <div class="info-box">
+    <ul style="font-size: 0.95rem">
+      <li><a href="https://www.getyourguide.com/tallinn-l152/" target="_blank">GetYourGuide Tallinn</a> — wycieczki, skip-the-line bilety, food tours</li>
+      <li><a href="https://www.viator.com/Tallinn" target="_blank">Viator Tallinn</a> — profesjonalne wycieczki z przewodnikiem</li>
+      <li><a href="https://www.airbnb.com/s/Tallinn--Estonia/experiences" target="_blank">Airbnb Experiences</a> — lokalne doświadczenia z mieszkańcami</li>
+      <li><a href="https://www.klook.com/city/37-tallinn-things-to-do/" target="_blank">Klook Tallinn</a> — bilety i aktywności, często z promocjami</li>
+      <li><a href="https://www.civitatis.com/en/tallinn/" target="_blank">Civitatis</a> — bezpłatne walking tours i wycieczki grupowe</li>
+    </ul>
+  </div>
+
+  <h3>Opinie i rezerwacje</h3>
+  <div class="info-box">
+    <ul style="font-size: 0.95rem">
+      <li><a href="https://www.tripadvisor.com/Tourism-g274958-Tallinn_Harju_County-Vacations.html" target="_blank">TripAdvisor Tallinn</a> — opinie o restauracjach, hotelach, atrakcjach</li>
+      <li><a href="https://www.yelp.com/tallinn" target="_blank">Yelp Tallinn</a> — lokalne recenzje restauracji i miejsc</li>
+      <li><a href="https://www.opentable.com/tallinn-restaurants" target="_blank">OpenTable</a> — rezerwacje w lepszych restauracjach</li>
+      <li><a href="https://foursquare.com/explore?mode=url&near=Tallinn%2C%20Estonia" target="_blank">Foursquare</a> — rekomendacje miejsc od lokalnych użytkowników</li>
+      <li><a href="https://goo.gl/maps/Tallinn" target="_blank">Google Maps Tallinn</a> — mapy offline, opinie, nawigacja</li>
+    </ul>
+  </div>
+
+  <h3>Specjalne doświadczenia</h3>
+  <div class="info-box">
+    <ul style="font-size: 0.95rem">
+      <li><a href="https://www.headout.com/city/tallinn" target="_blank">Headout</a> — last-minute atrakcje i promocje</li>
+      <li><a href="https://www.withlocals.com/experiences/estonia/tallinn/" target="_blank">WithLocals</a> — prywatne wycieczki z lokalnymi przewodnikami</li>
+      <li><a href="https://www.guruwalk.com/walks/tallinn" target="_blank">GuruWalk</a> — bezpłatne walking tours (napiwek dla przewodnika)</li>
+      <li><a href="https://www.booking.com/attractions/city/ee/tallinn.html" target="_blank">Booking.com Attractions</a> — bilety i wycieczki z możliwością anulacji</li>
+      <li><a href="https://www.timeout.com/tallinn" target="_blank">Time Out Tallinn</a> — aktualne eventy, kluby, kultura</li>
     </ul>
   </div>
 
@@ -1518,7 +1556,7 @@
   }
 
   function loadVisibleImages() {
-    document.querySelectorAll('.panel.active img[data-wiki], .hero img[data-wiki]').forEach(img => {
+    document.querySelectorAll('.panel.active img[data-wiki]').forEach(img => {
       if (!img.dataset.loaded) loadWikiImage(img);
     });
   }
@@ -1526,10 +1564,10 @@
   // Initial load
   window.addEventListener('load', () => {
     loadVisibleImages();
-    // Also preload hero image
-    const hero = document.querySelector('.hero-img');
-    if (hero) {
-      hero.addEventListener('load', () => hero.classList.add('loaded'));
+    // Preload start-hero background
+    const heroBg = document.querySelector('.start-hero-bg img');
+    if (heroBg) {
+      heroBg.addEventListener('load', () => heroBg.classList.add('loaded'));
     }
   });
 </script>
